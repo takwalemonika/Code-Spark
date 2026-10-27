@@ -1,24 +1,38 @@
 {
-  "name": "CodeSpark",
-  "short_name": "CodeSpark",
-  "description": "CodeSpark — spark your creativity and build amazing projects.",
-  "start_url": "/Code-Spark/",
-  "scope": "/Code-Spark/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4f46e5",
-  "icons": [
-  {
-    "src": "/Code-Spark/icons/icon-192.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "any"
-  },
-  {
-    "src": "/Code-Spark/icons/icon-512.png",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "any"
-  }
+"id": "/Code-Spark/",
+"name": "CodeSpark",
+"short_name": "CodeSpark",
+"description": "Learn coding step by step with CodeSpark coding lessons, Python and JavaScript labs, quizzes and projects.",
+"start_url": "/Code-Spark/",
+"scope": "/Code-Spark/",
+"display": "standalone",
+"orientation": "portrait-primary",
+"background_color": "#ffffff",
+"theme_color": "#4f46e5",
+"icons": [
+{
+"src": "/Code-Spark/icons/icon-192.png",
+"sizes": "192x192",
+"type": "image/png",
+"purpose": "any"
+},
+{
+"src": "/Code-Spark/icons/icon-512.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any"
+},
+{
+"src": "/Code-Spark/icons/icon-192.png",
+"sizes": "192x192",
+"type": "image/png",
+"purpose": "any maskable"
+},
+{
+"src": "/Code-Spark/icons/icon-512.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any maskable"
+}
 ]
 }
