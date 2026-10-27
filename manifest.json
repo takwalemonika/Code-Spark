@@ -1,25 +1,24 @@
 {
   "name": "CodeSpark",
   "short_name": "CodeSpark",
+  "description": "CodeSpark — spark your creativity and build amazing projects.",
   "start_url": "/Code-Spark/",
+  "scope": "/Code-Spark/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
-
-  "screenshots": [
+  "icons": [
     {
-      "src": "/Code-Spark/screenshots/codespark-desktop.png",
-      "sizes": "1280x720",
+      "src": "/Code-Spark/icons/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "CodeSpark desktop interface"
+      "purpose": "any"
     },
     {
-      "src": "/Code-Spark/screenshots/codespark-mobile.png",
-      "sizes": "720x1280",
+      "src": "/Code-Spark/icons/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "CodeSpark mobile interface"
+      "purpose": "any"
     }
   ]
 }
