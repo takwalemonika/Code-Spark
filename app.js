@@ -1,4 +1,26 @@
-// Shared CodeSpark PWA registration. GitHub Pages and PWABuilder use HTTPS.
-if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('Offline support registration failed:', err)));
+{
+  "id": "/Code-Spark/",
+  "name": "CodeSpark",
+  "short_name": "CodeSpark",
+  "description": "CodeSpark — spark your creativity and build amazing projects.",
+  "start_url": "/Code-Spark/",
+  "scope": "/Code-Spark/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/Code-Spark/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Code-Spark/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
