@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4F46E5"><link rel="manifest" href="manifest.json"><title>CodeSpark | Python Lab</title><link rel="stylesheet" href="style.css"><script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script><script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script></head><body>
+<nav><a class="brand" href="index.html">⚡ CodeSpark</a><div class="nav"><a href="index.html">Home</a><a href="modules.html">Learn</a><a class="active" href="python.html">🐍 Python Lab</a><a href="javascript.html">JavaScript Lab</a><a href="quizzes.html">Quizzes</a><a href="admin.html">Admin</a></div></nav>
+<header class="page wrap"><span class="eyebrow">PYTHON FOUNDATION LAB</span><h1>🐍 Python Learning Lab</h1><p>Practice the basics in a calm, beginner-focused workspace. Read the concept, change the code, run it, and improve your debugging confidence.</p></header>
+<main class="wrap"><div class="lab-tips"><span>🧠 Learn</span><span>⌨️ Write</span><span>▶ Run</span><span>🐞 Debug</span><span>📈 Improve</span></div>
+<div class="editor-shell"><div class="editor-toolbar"><b>🐍 Python Editor</b><button onclick="runCode()" class="run">▶ Run</button><button onclick="resetCode()">↺ Reset</button><button onclick="copyCode()">📋 Copy</button><button onclick="saveCode()">⬇ Save .py</button></div>
+<div class="examples"><button onclick="loadEx('hello')">👋 Hello</button><button onclick="loadEx('math')">➕ Math</button><button onclick="loadEx('ifelse')">🔀 If / Else</button><button onclick="loadEx('loop')">🔁 Loop</button><button onclick="loadEx('function')">⚙ Function</button><button onclick="loadEx('challenge')">🏆 Challenge</button></div>
+<div class="editor-grid"><section><div class="pane-title">CODE</div><textarea id="editor" spellcheck="false"></textarea></section><section><div class="pane-title">OUTPUT</div><pre id="output" class="output">Click Run to see the output.</pre></section></div></div>
+<div id="toast"></div><section class="practice-box"><h2>🏆 Foundation Challenge</h2><p>Write a program that asks for a student's marks and prints <b>Distinction</b> for 75+, <b>PASS</b> for 40–74, and <b>FAIL</b> below 40.</p><p><b>Hint:</b> Start with a variable called <code>marks</code>, read the value, and use conditions to decide the result.</p></section></main>
+<footer>⚡ CodeSpark — Python Practice Lab</footer>
+<script>const defaultCode='# Welcome to Python Lab\nname = "Student"\nprint("Hello,", name)\nprint("2 + 3 =", 2 + 3)';const examples={
+hello:`name = "Student"\nprint("Hello,", name)`,
+math:`a=12\nb=4\nprint("Sum:",a+b)\nprint("Product:",a*b)`,
+ifelse:`marks=78\nif marks>=75:\n    print("Distinction")\nelif marks>=40:\n    print("PASS")\nelse:\n    print("FAIL")`,
+loop:`for i in range(1,6):\n    print(i)`,
+function:`def add(a,b):\n    return a+b\nprint(add(5,7))`,
+challenge:`# Challenge: print PASS for marks >= 40\nmarks=82\nprint("PASS" if marks>=40 else "FAIL")`};
+function loadEx(k){editor.value=examples[k];output.textContent="Example loaded. Click Run.";output.className="output"}
+function copyCode(){navigator.clipboard?.writeText(editor.value);toast("Code copied!")}
+function resetCode(){editor.value=defaultCode;output.textContent="Ready to run.";output.className="output"}
+function saveCode(){const blob=new Blob([editor.value],{type:"text/plain"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="my-code.py";a.click();URL.revokeObjectURL(a.href)}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1400)}
+function runCode(){
+ const code=editor.value.trim(); if(!code){output.textContent="Write some code first.";return}
+ output.className="output"; output.textContent="";
+ const values=prompt("Input values (comma separated):","")??"";let idx=0;
+Sk.configure({output:t=>output.textContent+=t,inputfun:()=>values.split(",").map(x=>x.trim())[idx++]??""});
+Sk.misceval.asyncToPromise(()=>Sk.importMainWithBody("<stdin>",false,code,true)).catch(e=>{output.className="output error";output.textContent="❌ "+e.toString()});
+}
+resetCode();</script><script src="app.js"></script></body></html>

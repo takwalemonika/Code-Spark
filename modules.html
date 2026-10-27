@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4F46E5"><link rel="manifest" href="manifest.json"><title>CodeSpark | Learning Modules</title><link rel="stylesheet" href="style.css">
+<style>
+.lesson-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(16,24,40,.72);padding:30px 16px;overflow:auto}
+.lesson-modal.show{display:block}
+.lesson-window{position:relative;max-width:900px;margin:0 auto;background:#fff;border-radius:22px;padding:34px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
+.lesson-close{position:absolute;right:18px;top:18px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;cursor:pointer;font-weight:900}
+.lesson-window>h2{font-size:2.5rem;margin:10px 45px 25px 0}
+.lesson-section{border:1px solid var(--line);border-radius:15px;padding:20px;margin:15px 0;background:#fff}
+.lesson-section h3{margin-top:0}
+.lesson-section h4{margin-bottom:7px}
+.lesson-code,.lesson-output{background:#0b1220;color:#e5e7eb;border-radius:12px;padding:18px;overflow:auto;white-space:pre-wrap;font:14px/1.65 Consolas,monospace}
+.lesson-output{background:#f8fafc;color:#182033;border:1px solid var(--line)}
+.lesson-section li{margin:10px 0}
+.lesson-section.challenge{background:#f7f5ff;border-color:#d9d5ff}
+.lesson-footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:650px){.lesson-window{padding:23px 17px}.lesson-window>h2{font-size:1.9rem}.lesson-modal{padding:12px 8px}}
+</style>
+</head>
+<body>
+<nav><a class="brand" href="index.html">⚡ CodeSpark</a><div class="nav"><a href="index.html">Home</a><a class="active" href="modules.html">Learn</a><a href="python.html">🐍 Python Lab</a><a href="javascript.html">🟨 JavaScript Lab</a><a href="quizzes.html">Quizzes</a><a href="admin.html">Admin</a></div></nav>
+<header class="page wrap"><span class="eyebrow">STRONG FOUNDATION</span><h1>📚 Learning Modules</h1><p>Build coding confidence step by step. Each lesson follows <b>Learn → Example → Practice → Check → Improve</b> so students understand the idea before moving forward.</p></header>
+<main class="wrap">
+<section class="wrap section" style="padding-top:20px; padding-bottom:20px;">
+<div class="section-title"><span class="eyebrow">WHY THIS WORKS</span><h2>Learning built for understanding, not memorizing</h2></div>
+<div class="cards">
+<article><b>01</b><h3>🧠 Concept First</h3><p>Every lesson starts with a clear idea, a real example, and an explanation that connects to everyday thinking.</p></article>
+<article><b>02</b><h3>🛠️ Practice Weekly</h3><p>Students write code in the lab, fix errors, and test small ideas before moving to harder tasks.</p></article>
+<article><b>03</b><h3>🔍 Debugging Skills</h3><p>Readable errors become useful feedback. Students learn to investigate mistakes instead of avoiding them.</p></article>
+<article><b>04</b><h3>📈 Confidence Growth</h3><p>Each level prepares learners for the next one so they feel steady, capable and motivated.</p></article>
+</div>
+</section>
+<div class="level-nav"><a href="#beginner">🌱 Beginner</a><a href="#intermediate">🌿 Intermediate</a><a href="#advanced">🚀 Advanced</a></div>
+<section id="beginner" class="module-level"><div class="level-head"><span>LEVEL 1</span><h2>🌱 Absolute Beginner</h2><p>Start here if you have never coded before.</p></div><div id="beginnerGrid" class="lesson-grid"></div></section>
+<section id="intermediate" class="module-level"><div class="level-head"><span>LEVEL 2</span><h2>🌿 Intermediate</h2><p>Build problem-solving and programming skills.</p></div><div id="intermediateGrid" class="lesson-grid"></div></section>
+<section id="advanced" class="module-level"><div class="level-head"><span>LEVEL 3</span><h2>🚀 Advanced</h2><p>Move from syntax to real application concepts.</p></div><div id="advancedGrid" class="lesson-grid"></div></section>
+</main>
+<div id="lessonModal" class="lesson-modal" onclick="if(event.target===this)closeLesson()">
+ <div class="lesson-window">
+  <button class="lesson-close" onclick="closeLesson()">✕</button>
+  <span class="eyebrow">LEARN → EXAMPLE → PRACTICE → CHECK → IMPROVE</span>
+  <h2 id="lessonTitle"></h2>
+  <section class="lesson-section"><h3>🎯 Concept</h3><p id="lessonConcept"></p></section>
+  <section class="lesson-section"><h3>📖 Explanation</h3><p id="lessonExplanation"></p></section>
+  <section class="lesson-section"><h3>💻 Example</h3><pre id="lessonExample" class="lesson-code"></pre><h4>Output</h4><pre id="lessonOutput" class="lesson-output"></pre></section>
+  <section class="lesson-section"><h3>🧪 Practice</h3><ol id="lessonPractice"></ol></section>
+  <section class="lesson-section"><h3>🧠 Check Your Understanding</h3><ol id="lessonCheck"></ol></section>
+  <section class="lesson-section challenge"><h3>🚀 Mini Challenge</h3><p id="lessonChallenge"></p></section>
+  <div class="lesson-footer-actions">
+   <button class="btn primary" onclick="closeLesson()">Finish Lesson</button>
+  </div>
+ </div>
+</div>
+<footer>⚡ CodeSpark — Learn. Code. Create.</footer>
+<script>
+const data={
+beginner:[
+["What is Coding?","Learn how instructions become computer actions.","Computer Science"],
+["What is a Program?","Understand programs, instructions and algorithms.","Computer Science"],
+["Programming Languages","Why languages have different rules and uses.","Computer Science"],
+["Python Basics","Your first Python program, print and comments.","Python"],
+["JavaScript Basics","Your first JavaScript program and console output.","JavaScript"],
+["Variables","Store and change information in a program.","Both"],
+["Data Types","Numbers, text, Boolean values and basic collections.","Both"],
+["Operators","Arithmetic, comparison and logical operators.","Both"],
+["Input & Output","Get information from a user and display results.","Both"],
+["Debugging Basics","Read an error and find the likely cause.","Both"]
+],
+intermediate:[
+["If / Else","Make decisions using conditions.","Both"],["For Loops","Repeat instructions a known number of times.","Both"],
+["While Loops","Repeat while a condition remains true.","Both"],["Functions","Create reusable blocks of code.","Both"],
+["Strings","Work with text, length and common operations.","Both"],["Lists & Arrays","Store multiple values and process them.","Both"],
+["Dictionaries & Objects","Store related information using keys and properties.","Both"],
+["Nested Logic","Combine conditions and loops to solve problems.","Both"],
+["Error Handling","Handle common runtime problems safely.","Both"],["Problem Solving","Break a real problem into smaller steps.","Both"]
+],
+advanced:[
+["Object-Oriented Programming","Understand classes, objects, methods and attributes.","Both"],
+["File Handling","Read and write simple files.","Python"],["Modules & Libraries","Reuse code and organize larger programs.","Python"],
+["JavaScript DOM","Change webpage content using JavaScript.","JavaScript"],["Events","Respond to clicks, typing and other actions.","JavaScript"],
+["APIs — Concept","Understand how applications communicate with services.","JavaScript"],
+["Data Structures","Choose suitable ways to organize data.","Both"],["Testing","Check whether programs behave as expected.","Both"],
+["Mini Project Planning","Plan features, inputs, outputs and test cases.","Both"],
+["Final Project","Combine your skills into a working application.","Both"]
+]
+};
+
+
+const lessons={
+"What is Coding?":{
+concept:"Coding is the process of giving clear instructions to a computer so it can perform a task.",
+explanation:"A computer follows instructions rather than guessing what you want. Coding means writing those instructions in a programming language. A program is made from code, and a programmer is the person who writes it. Think about making tea: you follow steps in order, and a computer program also follows instructions in order.",
+example:"print(\"Hello\")",output:"Hello",
+practice:["Write Python code that displays Hello World.","Write Python code that displays your name.","What will print(10 + 5) output?","What is the difference between print(10 + 5) and print(\"10 + 5\")?"],
+check:["What is coding?","What is a program?","What is a programmer?","What does print() do?"],
+challenge:"Create a Python program that displays your name, age, and one sentence about why you are learning coding."
+},
+"What is a Program?":{
+concept:"A program is a collection of instructions that tells a computer how to perform a task.",
+explanation:"Programs commonly follow Input → Processing → Output. An algorithm is a step-by-step method for solving a problem. A calculator, for example, receives numbers, processes them, and produces a result.",
+example:"a = 5\nb = 3\nprint(a + b)",output:"8",
+practice:["Create an algorithm for finding the area of a rectangle.","Write a program that adds two numbers.","Identify the input, processing and output in a calculator."],
+check:["What is a program?","What is an algorithm?","What are input and output?"],
+challenge:"Write an algorithm for calculating a student's total marks."
+},
+"Programming Languages":{
+concept:"A programming language is a structured language used to give instructions to a computer.",
+explanation:"Programming languages have their own syntax, keywords and rules. Different languages are commonly used for different purposes. Python is used for areas such as beginner programming, automation and AI-related work, while JavaScript is widely used for interactive web development.",
+example:"Python: print(\"Hello\")\nJavaScript: console.log(\"Hello\");",
+output:"Both display Hello in their respective environments.",
+practice:["Name three programming languages.","Give one common use for Python.","Give one common use for JavaScript.","Why do programming languages have rules?"],
+check:["What is a programming language?","Why are there many programming languages?","What is syntax?"],
+challenge:"Write one Python instruction and one JavaScript instruction that displays your name."
+},
+"Python Basics":{
+concept:"Python is a beginner-friendly programming language. You can start by displaying text with print().",
+explanation:"The print() function displays information. Python also supports comments, which are notes for humans and are ignored by Python. Text is normally written inside quotation marks.",
+example:"# My first Python program\nprint(\"Hello, World!\")\nprint(\"I am learning Python\")",
+output:"Hello, World!\nI am learning Python",
+practice:["Print Hello World.","Print your name.","Print your age.","Add a comment above your code."],
+check:["What does print() do?","What is a comment?","How do you write a Python single-line comment?"],
+challenge:"Create a short introduction program with your name, age and favourite subject."
+},
+"JavaScript Basics":{
+concept:"JavaScript is a programming language widely used to make webpages interactive.",
+explanation:"JavaScript can display information in the browser console using console.log(). Comments help explain code. JavaScript is one of the main technologies used in web development.",
+example:"// My first JavaScript program\nconsole.log(\"Hello, World!\");\nconsole.log(\"I am learning JavaScript\");",
+output:"Hello, World!\nI am learning JavaScript",
+practice:["Display Hello World using console.log().","Display your name.","Display a calculation such as 10 + 5."],
+check:["What is JavaScript commonly used for?","What does console.log() do?","How do you write a single-line comment?"],
+challenge:"Display your name, age and favourite subject using JavaScript."
+},
+"Variables":{
+concept:"A variable is a named place used to store information in a program.",
+explanation:"Think of a variable as a labelled box. The label is the variable name and the value is what the box contains. Variables make programs easier to change and reuse. In Python you can assign a value with =; in JavaScript you commonly use let or const.",
+example:"name = \"Student\"\nage = 20\nprint(name)\nprint(age)",
+output:"Student\n20",
+practice:["Create a variable for your name.","Create a variable for your age.","Create a variable for your city.","Change the value of age and print it again."],
+check:["What is a variable?","Why are variables useful?","Can a variable's value change?","What is assignment?"],
+challenge:"Create a small student profile using name, age, city and favourite subject variables."
+},
+"Data Types":{
+concept:"A data type describes the kind of value stored in a program.",
+explanation:"Common beginner types include integers for whole numbers, floats for decimal numbers, strings for text, and Boolean values for True or False. Collections such as lists can store multiple values.",
+example:"age = 20\nheight = 5.8\nname = \"Student\"\nis_student = True\nsubjects = [\"Python\", \"JavaScript\"]",
+output:"The variables contain different kinds of data.",
+practice:["Identify the type of 25.","Identify the type of \"Hello\".","Identify the type of 3.14.","Identify the type of True.","Create a list of three subjects."],
+check:["What is a string?","What is a Boolean?","What is the difference between an integer and a float?"],
+challenge:"Create a student record using at least four different data types."
+},
+"Operators":{
+concept:"Operators tell a program to perform calculations, comparisons or logical operations.",
+explanation:"Arithmetic operators include +, -, * and /. Comparison operators such as ==, > and < compare values. Logical operators such as and, or and not combine or reverse conditions.",
+example:"a = 10\nb = 3\nprint(a + b)\nprint(a > b)\nprint(a == b)",
+output:"13\nTrue\nFalse",
+practice:["Calculate 10 + 5.","Calculate 10 * 3.","Find the remainder of 10 divided by 3.","Check whether 20 is greater than 18."],
+check:["What does % do?","What is the difference between = and ==?","What does > mean?"],
+challenge:"Create a program that checks whether a person is 18 or older."
+},
+"Input & Output":{
+concept:"Input is information given to a program; output is information produced by a program.",
+explanation:"Many programs follow Input → Processing → Output. In Python, input() can receive information from a user. If the input should be treated as a number, it can be converted with int() or float().",
+example:"name = input(\"Enter your name: \")\nprint(\"Hello\", name)",
+output:"If the user enters Student: Hello Student",
+practice:["Ask the user for their name.","Ask for their age.","Ask for two numbers and print their sum.","Explain the difference between input and output."],
+check:["What is input?","What is output?","Why might int() be used with input()?"],
+challenge:"Build a simple calculator that takes two numbers from the user."
+},
+"Debugging Basics":{
+concept:"Debugging is the process of finding and fixing problems in code.",
+explanation:"A bug is a mistake in a program. Common beginner problems include syntax errors, name errors and type errors. Read the error message, locate the suspicious line, fix the issue, and run the program again.",
+example:"# Incorrect\nname = \"Student\"\nprint(nam)\n\n# Correct\nname = \"Student\"\nprint(name)",
+output:"Student",
+practice:["Find the error in print(nam) when the variable is name.","Find the missing parenthesis in print(\"Hello\".","Identify why age=\"20\" followed by age+5 causes a type problem."],
+check:["What is a bug?","What is debugging?","Why should you read error messages?"],
+challenge:"Take one broken beginner program and fix it without deleting the whole program."
+},
+
+"If / Else":{
+concept:"If / else lets a program make decisions based on conditions.",
+explanation:"A condition produces True or False. If the condition is True, the if block runs. Otherwise, the else block runs. elif can test another condition in between.",
+example:"marks = 78\nif marks >= 75:\n    print(\"Distinction\")\nelif marks >= 40:\n    print(\"PASS\")\nelse:\n    print(\"FAIL\")",
+output:"Distinction",
+practice:["Check whether a number is positive or negative.","Check whether a person is 18 or older.","Create a pass/fail program using 40 as the passing mark."],
+check:["What is a condition?","When does else run?","What is elif used for?"],
+challenge:"Create a grade program with Distinction, PASS and FAIL."
+},
+"For Loops":{
+concept:"A for loop repeats instructions for each item or for a known sequence of repetitions.",
+explanation:"Loops prevent you from writing the same instruction many times. In Python, range() is often used when you want a sequence of numbers. JavaScript commonly uses for with a counter.",
+example:"for i in range(1, 6):\n    print(i)",
+output:"1\n2\n3\n4\n5",
+practice:["Print numbers 1 to 10.","Print the word Coding five times.","Print even numbers from 2 to 10."],
+check:["Why are loops useful?","What does range(1, 6) produce?","What is a loop counter?"],
+challenge:"Print a multiplication table for a number."
+},
+"While Loops":{
+concept:"A while loop repeats instructions as long as a condition remains True.",
+explanation:"A while loop is useful when you do not know exactly how many repetitions are needed. The condition is checked before each repetition, so the loop must eventually become False.",
+example:"count = 1\nwhile count <= 5:\n    print(count)\n    count += 1",
+output:"1\n2\n3\n4\n5",
+practice:["Print 1 to 5 with while.","Count down from 5 to 1.","Keep increasing a number until it reaches 10."],
+check:["When does a while loop stop?","Why must the condition eventually become False?","What can cause an infinite loop?"],
+challenge:"Create a number guessing loop that continues until the correct number is entered."
+},
+"Functions":{
+concept:"A function is a reusable block of code that performs a particular task.",
+explanation:"Functions help organize programs and avoid repeating code. A function can accept parameters and return a result. In Python, def is used to define a function.",
+example:"def add(a, b):\n    return a + b\n\nprint(add(5, 7))",
+output:"12",
+practice:["Create a function that prints Hello.","Create add(a,b).","Create a function that returns the square of a number."],
+check:["What is a function?","Why do we use functions?","What is a parameter?","What does return do?"],
+challenge:"Build a calculator using separate functions for addition, subtraction, multiplication and division."
+},
+"Strings":{
+concept:"A string is a sequence of text characters.",
+explanation:"Strings are used for names, messages and other text. You can find their length, join them, change their case and access individual characters.",
+example:"name = \"CodeSpark\"\nprint(len(name))\nprint(name.upper())\nprint(name[0])",
+output:"9\nCODESPARK\nC",
+practice:["Find the length of your name.","Convert a word to uppercase.","Print the first character of a string.","Join two strings."],
+check:["What is a string?","What does len() do?","What is indexing?"],
+challenge:"Create a program that asks for a name and produces a formatted greeting."
+},
+"Lists & Arrays":{
+concept:"Lists and arrays store multiple values so a program can work with collections of data.",
+explanation:"Instead of creating a separate variable for every subject, you can store all subjects in one collection. You can access items by position, add items and loop through them.",
+example:"subjects = [\"Python\", \"JavaScript\", \"Math\"]\nfor subject in subjects:\n    print(subject)",
+output:"Python\nJavaScript\nMath",
+practice:["Create a list of five numbers.","Print the first item.","Add a new item.","Loop through the list and print every item."],
+check:["Why use a list?","What is an index?","How can a loop process a list?"],
+challenge:"Create a marks list and calculate its total."
+},
+"Dictionaries & Objects":{
+concept:"Dictionaries and objects store related information using keys and properties.",
+explanation:"A dictionary maps keys to values. A JavaScript object similarly groups related properties. This is useful for representing a student, product or user.",
+example:"student = {\"name\": \"Student\", \"age\": 20}\nprint(student[\"name\"])\nprint(student[\"age\"])",
+output:"Student\n20",
+practice:["Create a dictionary for a student.","Add a city value.","Read the student's name.","Create a JavaScript object with name and age."],
+check:["What is a key?","What is a value?","Why group related data?"],
+challenge:"Create a student record containing name, age, city, course and marks."
+},
+"Nested Logic":{
+concept:"Nested logic means putting one condition or loop inside another.",
+explanation:"Real problems often require more than one decision or repetition. A nested if can check a second condition after the first condition is satisfied. A nested loop can process rows and columns or other multi-level data.",
+example:"age = 20\nhas_id = True\nif age >= 18:\n    if has_id:\n        print(\"Allowed\")\n    else:\n        print(\"ID required\")",
+output:"Allowed",
+practice:["Create two-level age and ID checking.","Use a nested loop to print a 3×3 pattern.","Combine a loop with an if condition."],
+check:["What is nested logic?","Why can nested logic be useful?","What is a nested loop?"],
+challenge:"Create a program that checks several students and reports whether each passes."
+},
+"Error Handling":{
+concept:"Error handling lets a program respond safely when something goes wrong.",
+explanation:"Some problems happen while a program is running, such as invalid numeric input or missing files. Python commonly uses try/except, while JavaScript can use try/catch. The goal is to handle expected problems instead of letting the program fail unexpectedly.",
+example:"try:\n    age = int(\"abc\")\nexcept ValueError:\n    print(\"Please enter a number\")",
+output:"Please enter a number",
+practice:["Handle invalid number input.","Catch a division-by-zero error.","Explain why error handling improves a program."],
+check:["What is a runtime error?","What does try do?","What does except/catch do?"],
+challenge:"Create a calculator that handles invalid input without crashing."
+},
+"Problem Solving":{
+concept:"Problem solving means breaking a large problem into smaller, understandable steps.",
+explanation:"A useful process is Understand → Break Down → Plan → Code → Test → Improve. Before writing code, identify inputs, outputs, rules and edge cases.",
+example:"Problem: calculate an average\n1. Get the numbers.\n2. Add them.\n3. Divide by the count.\n4. Display the result.",
+output:"A clear plan makes the coding easier.",
+practice:["Break a calculator into steps.","Plan a student grading program.","Identify inputs and outputs for a login system."],
+check:["Why break a problem into smaller steps?","What should you identify before coding?","Why test after coding?"],
+challenge:"Write a complete algorithm for a student marks manager."
+},
+
+"Object-Oriented Programming":{
+concept:"Object-Oriented Programming (OOP) organizes software around objects that contain data and behavior.",
+explanation:"A class acts like a blueprint. An object is an instance created from that blueprint. Attributes store information and methods define actions. OOP helps organize larger programs.",
+example:"class Student:\n    def __init__(self, name):\n        self.name = name\n    def greet(self):\n        print(\"Hello\", self.name)\n\ns = Student(\"Student\")\ns.greet()",
+output:"Hello Student",
+practice:["Identify a class and object in a real-life example.","Create a simple Student class.","Add an age attribute.","Add a method that displays the student's name."],
+check:["What is a class?","What is an object?","What are attributes and methods?"],
+challenge:"Design a Student class with name, marks and a method that prints the result."
+},
+"File Handling":{
+concept:"File handling lets a program read information from files and write information to files.",
+explanation:"Programs can store information beyond a single run using files. Common operations are opening, reading, writing and closing a file. Python's with statement helps manage files safely.",
+example:"with open(\"notes.txt\", \"w\") as file:\n    file.write(\"Learning coding\")",
+output:"A file named notes.txt contains: Learning coding",
+practice:["Write a short note to a file.","Read a file and display its contents.","Explain the difference between read and write modes."],
+check:["Why use files?","What does write mode do?","Why is with useful in Python?"],
+challenge:"Create a small notes program that saves and reads a student's notes."
+},
+"Modules & Libraries":{
+concept:"Modules and libraries provide reusable code so you do not need to build everything from scratch.",
+explanation:"A module is a file containing reusable code. A library or package can contain many useful modules. Importing code improves organization and saves development time.",
+example:"import math\nprint(math.sqrt(25))",
+output:"5.0",
+practice:["Import math and use sqrt.","Find another useful math function.","Explain why reusable libraries are useful."],
+check:["What is a module?","Why use libraries?","What does import do?"],
+challenge:"Build a small program using a standard library module."
+},
+"JavaScript DOM":{
+concept:"The DOM represents a webpage as objects that JavaScript can read and change.",
+explanation:"DOM stands for Document Object Model. JavaScript can select an element, change its text, change styles, add elements or remove them. This connects programming logic to the webpage.",
+example:"document.getElementById(\"title\").textContent = \"Hello CodeSpark\";",
+output:"The webpage element with id title changes to Hello CodeSpark.",
+practice:["Select an element by id.","Change its text.","Change a simple style with JavaScript."],
+check:["What does DOM stand for?","Why is the DOM useful?","What can JavaScript change on a webpage?"],
+challenge:"Create a button that changes a heading when clicked."
+},
+"Events":{
+concept:"An event is an action such as a click, key press or form submission that JavaScript can respond to.",
+explanation:"Event handlers connect an event to a function. This allows websites to react to users instead of remaining static.",
+example:"button.addEventListener(\"click\", function(){\n    console.log(\"Button clicked\");\n});",
+output:"Clicking the button runs the function.",
+practice:["Identify three browser events.","Add a click handler to a button.","Create a keydown handler."],
+check:["What is an event?","What is an event handler?","Name three common browser events."],
+challenge:"Build a button that changes a message every time it is clicked."
+},
+"APIs — Concept":{
+concept:"An API is a way for one software system to communicate with another system using defined rules.",
+explanation:"An application can request data or services from another system through an API. A weather app, for example, can request weather data from a weather service. APIs commonly use requests and responses.",
+example:"Application → API request → Service\nApplication ← API response ← Service",
+output:"The application receives structured information from the service.",
+practice:["Give one example of an app that might use an API.","Explain request and response.","Explain why APIs are useful."],
+check:["What does API mean?","What does an API allow applications to do?","What is a request? What is a response?"],
+challenge:"Draw the flow of a student app requesting results from a school server."
+},
+"Data Structures":{
+concept:"A data structure is a way of organizing data so it can be stored and processed effectively.",
+explanation:"Different problems need different structures. Lists are useful for ordered collections, dictionaries/objects for key-value information, and sets for unique values. Choosing a suitable structure makes code easier to write and understand.",
+example:"students = [\"Asha\", \"Rahul\", \"Neha\"]\nmarks = {\"Asha\": 82, \"Rahul\": 75}",
+output:"Two structures store different kinds of information.",
+practice:["Choose a list for a shopping list.","Choose a dictionary for student marks.","Explain why a set could be useful for unique values."],
+check:["What is a data structure?","Why does the choice matter?","When would you use a dictionary?"],
+challenge:"Design data structures for a small school management system."
+},
+"Testing":{
+concept:"Testing checks whether a program behaves as expected.",
+explanation:"A test uses known inputs and checks the actual result against the expected result. Good testing includes normal cases, boundary cases and invalid inputs.",
+example:"Function: add(2, 3)\nExpected: 5\nActual: 5\nResult: PASS",
+output:"PASS",
+practice:["Create three test cases for a calculator.","Test a pass/fail program at 39, 40 and 75.","Include one invalid input test."],
+check:["What is testing?","What is an expected result?","Why test boundary values?"],
+challenge:"Create five test cases for a student grade program."
+},
+"Mini Project Planning":{
+concept:"Project planning turns an idea into clear features, inputs, outputs and test cases before coding.",
+explanation:"Start with the problem and target user. List the features, define what information enters the program, what result should come out, and how you will test each feature. Build the smallest useful version first.",
+example:"Project: Calculator\nFeatures: add, subtract, multiply, divide\nInputs: two numbers and an operation\nOutput: result\nTests: normal values, zero, invalid input",
+output:"A clear project plan ready for implementation.",
+practice:["Choose a small project idea.","List three features.","List inputs and outputs.","Write three test cases."],
+check:["Why plan before coding?","What are requirements?","What is a test case?"],
+challenge:"Create a one-page plan for a Number Guessing Game or Quiz App."
+},
+"Final Project":{
+concept:"A final project combines concepts into a working application that solves a real problem.",
+explanation:"A good final project moves through Plan → Build → Test → Debug → Improve. Use the skills from earlier modules rather than adding unnecessary complexity.",
+example:"Idea → Requirements → Design → Code → Test → Debug → Improve → Final version",
+output:"A working application with tested features.",
+practice:["Choose a real problem.","List required features.","Choose Python, JavaScript or both.","Create test cases."],
+check:["What should a final project solve?","Why test the project?","Why improve after testing?"],
+challenge:"Build and present a small working application that combines variables, conditions, loops or functions with a clear user goal."
+}
+};
+
+function render(id,arr){
+ document.getElementById(id).innerHTML=arr.map((x,i)=>`
+ <article class="lesson-card">
+  <span class="tag">${x[2]}</span><div class="lesson-num">${i+1}</div>
+  <h3>${x[0]}</h3><p>${x[1]}</p>
+  <div class="lesson-actions"><button onclick="startLesson('${x[0].replace(/'/g,"\\'")}')">📖 Learn</button>
+  <a href="${x[2]==='Python'?'python.html':x[2]==='JavaScript'?'javascript.html':'quizzes.html'}">Practice →</a></div>
+ </article>`).join("");
+}
+render("beginnerGrid",data.beginner);
+render("intermediateGrid",data.intermediate);
+render("advancedGrid",data.advanced);
+
+function startLesson(name){
+ localStorage.setItem("currentLesson",name);
+ const l=lessons[name];
+ if(!l){ alert("This lesson is available in the current learning path. Detailed beginner lesson content is being expanded."); return; }
+ document.getElementById("lessonModal").classList.add("show");
+ document.getElementById("lessonTitle").textContent=name;
+ document.getElementById("lessonConcept").textContent=l.concept;
+ document.getElementById("lessonExplanation").textContent=l.explanation;
+ document.getElementById("lessonExample").textContent=l.example;
+ document.getElementById("lessonOutput").textContent=l.output;
+ document.getElementById("lessonPractice").innerHTML=l.practice.map((p,i)=>`<li>${p}</li>`).join("");
+ document.getElementById("lessonCheck").innerHTML=l.check.map((p,i)=>`<li><b>Q${i+1}.</b> ${p}</li>`).join("");
+ document.getElementById("lessonChallenge").textContent=l.challenge;
+ document.getElementById("lessonModal").scrollTop=0;
+}
+function closeLesson(){document.getElementById("lessonModal").classList.remove("show")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLesson()});
+</script><script src="app.js"></script></body></html>
